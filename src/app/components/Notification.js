@@ -7,10 +7,14 @@ export default function Notification({
   showCreateSuccess,
   showUpdateSuccess,
   showDeleteSuccess,
+  showValidApiKey,
+  showInvalidApiKey,
   onCloseCopy,
   onCloseCreate,
   onCloseUpdate,
   onCloseDelete,
+  onCloseValid,
+  onCloseInvalid,
 }) {
   return (
     <>
@@ -37,6 +41,18 @@ export default function Notification({
         message="API Key deleted successfully"
         bgColor="bg-red-600"
         onClose={onCloseDelete}
+      />
+      <Toast
+        show={showValidApiKey}
+        message="Valid API key, /protected can be accessed"
+        bgColor="bg-green-600"
+        onClose={onCloseValid}
+      />
+      <Toast
+        show={showInvalidApiKey}
+        message="Invalid API Key"
+        bgColor="bg-red-600"
+        onClose={onCloseInvalid}
       />
     </>
   );

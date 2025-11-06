@@ -115,7 +115,7 @@ export default function Sidebar({ isOpen, onToggle }) {
           {isOpen && <span>Research Reports</span>}
         </Link>
         <Link
-          href="#"
+          href="/playground"
           className={`flex items-center gap-3 mb-1 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors ${
             isOpen ? "px-3 py-2" : "px-2 py-2 justify-center"
           }`}

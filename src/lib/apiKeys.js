@@ -90,3 +90,42 @@ export async function getCurrentUserId() {
   // Puedes cambiarlo o implementar autenticación real
   return "default-user-id";
 }
+
+/**
+ * Validar una API key
+ */
+export async function validateApiKey(apiKey) {
+  try {
+    if (!apiKey || apiKey.trim() === "") {
+      return { valid: false, error: "Invalid API Key" };
+    }
+
+    // Buscar la API key en la base de datos
+    const { data, error } = await supabase
+      .from("api_keys")
+      .select("id, name, key, user_id")
+      .eq("key", apiKey.trim())
+      .single();
+
+    if (error) {
+      // Si no se encuentra la key, error.code será 'PGRST116'
+      if (error.code === "PGRST116") {
+        return { valid: false, error: "Invalid API Key" };
+      }
+      throw error;
+    }
+
+    if (data) {
+      return { valid: true, data };
+    }
+
+    return { valid: false, error: "Invalid API Key" };
+  } catch (error) {
+    console.error("Error validating API key:", error);
+    // Si el error es PGRST116, retornar "Invalid API Key"
+    if (error.code === "PGRST116") {
+      return { valid: false, error: "Invalid API Key" };
+    }
+    return { valid: false, error: "Invalid API Key" };
+  }
+}
